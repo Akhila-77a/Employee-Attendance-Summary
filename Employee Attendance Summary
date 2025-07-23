@@ -1,0 +1,9 @@
+SELECT 
+    E.EmployeeID,
+    E.FullName,
+    COUNT(DISTINCT A.AttendanceDate) AS DaysPresent,
+    FORMAT(A.AttendanceDate, 'yyyy-MM') AS Month
+FROM Attendance A
+JOIN Employee E ON A.EmployeeID = E.EmployeeID
+WHERE A.AttendanceDate >= DATEADD(MONTH, -1, GETDATE())
+GROUP BY E.EmployeeID, E.FullName, FORMAT(A.AttendanceDate, 'yyyy-MM');
